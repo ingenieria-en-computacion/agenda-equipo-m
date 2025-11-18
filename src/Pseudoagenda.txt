@@ -1,0 +1,142 @@
+Algoritmo AgendaContactos
+	Definir MAX_CONTACTOS, contactos, i, j, opcion Como Entero
+	Definir Dia, Mes, Tipo Como Entero
+	Definir Nombre, Apellido, Telefono, Buscar_contacto Como Cadena
+	Definir Encontrado como logico
+	
+	MAX_CONTACTOS <- 100
+	
+	Dimension nombres[MAX_CONTACTOS]
+	Dimension apellidos[MAX_CONTACTOS]
+	Dimension telefonos[MAX_CONTACTOS]
+	Dimension dias[MAX_CONTACTOS]
+	Dimension meses[MAX_CONTACTOS]
+	Dimension tipos[MAX_CONTACTOS]
+	
+	contactos <- 0
+	
+	Repetir //Aqui se dan todas las opciones, y se lee la escojida
+		Escribir "Agenda"
+		Escribir "1. Agregar contacto"
+		Escribir "2. Mostrar contactos"
+		Escribir "3. Ordenar contactos alfabeticamente"
+		Escribir "4. Buscar contacto"
+		Escribir "5. Salir"
+		Escribir "Seleccione una opcion: "
+		Leer opcion
+		
+		Segun opcion Hacer
+			1:
+				Si contactos < MAX_CONTACTOS Entonces //Mientras que los contactos sean menores al maximo se ejeuta 
+					contactos <- contactos + 1 //Parte del ultimo contacto y el +1 asigna el siguiente
+					//Todo eso es para registrar los datos dentro de la cadena 
+					Escribir "Ingrese el nombre: "
+					Leer nombres[contactos]
+					Escribir "Ingrese el apellido: "
+					Leer apellidos[contactos]
+					Escribir "Ingrese el dia de nacimiento (entero): "
+					Leer dias[contactos]
+					Escribir "Ingrese el mes de nacimiento (entero): "
+					Leer meses[contactos]
+					Escribir "Ingrese el telefono: "
+					Leer telefonos[contactos]
+					Escribir "Ingrese el tipo de telefono (1=Fijo, 2=Movil): "
+					Leer tipos[contactos]
+					
+					Escribir "Contacto agregado correctamente."
+				SiNo
+					Escribir "La agenda esta llena." //En caso de que se halla superado el numero de contactos macimos se genera un
+				FinSi
+				
+			2:
+				Si contactos = 0 Entonces //Revisa si hay contactos si no los hay desplieja eso
+					Escribir "No hay contactos en la agenda."
+				SiNo
+					Para i <- 1 Hasta contactos Con Paso 1 Hacer //Empieza a mostrar los datos empezando con el indice 1 hasta el ultimo contacto
+						Escribir "Contacto ", i
+						Escribir "Nombre: ", nombres[i]
+						Escribir "Apellido: ", apellidos[i]
+						Escribir "Telefono: ", telefonos[i]
+						Escribir "Nacimiento: ", dias[i], "/", meses[i]
+						Si tipos[i] = 1 Entonces //Si arriba seleccionaste que era fijo esto lo comprueba
+							Escribir "Tipo: Fijo"
+						SiNo
+							Escribir "Tipo: Movil"
+						FinSi
+						Escribir "..." //No se va a ejecutar nunca creo...
+					FinPara
+				FinSi
+				
+			3:
+				Si contactos > 1 Entonces //Solo funciona mientras tengas un contacto
+					Para i <- 1 Hasta contactos - 1 Hacer //Asigna el primero valor y genera el ciclo
+						Para j <- 1 Hasta contactos - i Hacer
+							
+							Si nombres[j] > nombres[j + 1] Entonces
+								
+								nombre <- nombres[j]
+								nombres[j] <- nombres[j + 1]
+								nombres[j + 1] <- nombre
+								
+								apellido <- apellidos[j]
+								apellidos[j] <- apellidos[j + 1]
+								apellidos[j + 1] <- apellido
+								
+								Telefono <- telefonos[j]
+								telefonos[j] <- telefonos[j + 1]
+								telefonos[j + 1] <- Telefono
+								
+								Dia <- dias[j]
+								dias[j] <- dias[j + 1]
+								dias[j + 1] <- Dia
+								
+								Mes <- meses[j]
+								meses[j] <- meses[j + 1]
+								meses[j + 1] <- Mes
+								
+								Tipo <- tipos[j]
+								tipos[j] <- tipos[j + 1]
+								tipos[j + 1] <- Tipo
+							FinSi
+						FinPara
+					FinPara
+					Escribir "Contactos ordenados por nombre."
+				SiNo
+					Escribir "No hay suficientes contactos para ordenar."
+				FinSi
+				
+			4:
+				si contactos = 0 Entonces
+					Escribir "No hay contactos guardados."
+				SiNo
+					Escribir "Ingrese el nombre o el numero del contacto que desea buscar: "
+					Leer Buscar_contacto
+				    Encontrado <- falso
+				
+				    Para i <- 1 Hasta contactos con Paso 1 Hacer
+						Si nombres[i] = Buscar_contacto o apellidos[i] = Buscar_contacto  o telefonos[i] = Buscar_contacto Entonces
+							Escribir "Contacto ", i
+						    Escribir "Nombre: ", nombres[i]
+						    Escribir "Apellido: ", apellidos[i]
+						    Escribir "Telefono: ", telefonos[i]
+						    Escribir "Nacimiento: ", dias[i], "/", meses[i]
+						    Si tipos[i] = 1 Entonces //Si arriba seleccionaste que era fijo esto lo comprueba
+							Escribir "Tipo: Fijo"
+						    SiNo
+							Escribir "Tipo: Movil"
+						    FinSi
+						    Encontrado <- Verdadero
+						FinSi
+					FinPara
+					
+			    Si No Encontrado Entonces
+					Escribir "No se encontro el contacto(Error fatal)"
+			    FinSi
+			FinSi
+			5:
+				Escribir "Bye :)..."
+			De Otro Modo:
+				Escribir "Error fatal"
+		FinSegun
+	Hasta Que opcion = 5
+FinAlgoritmo
